@@ -16,8 +16,8 @@
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "5E475AF11675F7CB008C3699"
                BuildableName = "UsingUnneededAlpha"
-               BlueprintName = "UsingUnneededAlpha"
-               ReferencedContainer = "container:UsingUnneededAlpha.xcodeproj">
+               BlueprintName = "UsesAlpha"
+               ReferencedContainer = "container:UsesAlpha.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -34,8 +34,8 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "5E475AF11675F7CB008C3699"
             BuildableName = "UsingUnneededAlpha"
-            BlueprintName = "UsingUnneededAlpha"
-            ReferencedContainer = "container:UsingUnneededAlpha.xcodeproj">
+            BlueprintName = "UsesAlpha"
+            ReferencedContainer = "container:UsesAlpha.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </TestAction>
@@ -53,8 +53,8 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "5E475AF11675F7CB008C3699"
             BuildableName = "UsingUnneededAlpha"
-            BlueprintName = "UsingUnneededAlpha"
-            ReferencedContainer = "container:UsingUnneededAlpha.xcodeproj">
+            BlueprintName = "UsesAlpha"
+            ReferencedContainer = "container:UsesAlpha.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>
@@ -71,8 +71,8 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "5E475AF11675F7CB008C3699"
             BuildableName = "UsingUnneededAlpha"
-            BlueprintName = "UsingUnneededAlpha"
-            ReferencedContainer = "container:UsingUnneededAlpha.xcodeproj">
+            BlueprintName = "UsesAlpha"
+            ReferencedContainer = "container:UsesAlpha.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>
