@@ -242,7 +242,7 @@ BOOL HasAndUsesAlphaChannel(CGImageRef inImage)
 //        fprintf(stdout, "  pixel = {%u,%u,%u,%u}",p.alpha,p.red,p.green,p.blue);
 //        fprintf(stdout,"\n");
         if (p.alpha != 255) {
-          fprintf(stdout,"at {%u,%u}, found non-translucent ARGB pixel = {%u,%u,%u,%u}\n",x,y,p.alpha,p.red,p.green,p.blue);
+//          fprintf(stdout,"at {%u,%u}, found non-translucent ARGB pixel = {%u,%u,%u,%u}\n",x,y,p.alpha,p.red,p.green,p.blue);
           usesAlphaResult = YES;
 //          goto finish;
         }
@@ -284,7 +284,7 @@ int main(int argc, const char * argv[])
   @autoreleasepool {
     
     if (argc != 2) {
-      NSLog(@"usage: StripAlphaIfNeeded /full/path/to/file.png");
+      NSLog(@"usage: UsingUnneededAlpha /full/path/to/file.png");
       exit(1);
     }
     
@@ -293,6 +293,9 @@ int main(int argc, const char * argv[])
       NSLog(@"No file found at path %@",PNGFilepath);
       exit(1);
     }
+    else {
+      NSLog(@"%@",PNGFilepath);
+    }
     
     CGImageRef image = MyCreateCGImageFromFile(PNGFilepath);
     if (!image) {
@@ -300,23 +303,23 @@ int main(int argc, const char * argv[])
       exit(1);
     }
     
-    NSString * const filename = [PNGFilepath lastPathComponent];
-    
     BOOL const hasAlphaLayer = HasAlpha(image);
 
     if (!hasAlphaLayer) {
-      NSLog(@"image %@ : hasAlpha = NO ; usesAlpha = NO",filename);
+      NSLog(@"  hasAlpha = NO");
       exit(0);
+    } else {
+      NSLog(@"  hasAlpha = YES");
     }
 
     BOOL const usesAlphaLayer = HasAndUsesAlphaChannel(image);
     if (usesAlphaLayer) {
-      NSLog(@"image %@ : hasAlpha = YES; usesAlpha = YES",filename);
+      NSLog(@"  usesAlpha = YES");
       exit(0);
     }
     else
     {
-      NSLog(@"image %@ : hasAlpha = YES; usesAlpha = NO",filename);
+      NSLog(@"  usesAlpha = NO");
       exit(0);
     }
   }
