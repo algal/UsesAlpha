@@ -27,10 +27,10 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		5E475AF21675F7CB008C3699 /* StripAlphaIfNeeded */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = StripAlphaIfNeeded; sourceTree = BUILT_PRODUCTS_DIR; };
+		5E475AF21675F7CB008C3699 /* UsingUnneededAlpha */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = UsingUnneededAlpha; sourceTree = BUILT_PRODUCTS_DIR; };
 		5E475AF61675F7CB008C3699 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		5E475AF91675F7CB008C3699 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		5E475AFC1675F7CB008C3699 /* StripAlphaIfNeeded-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "StripAlphaIfNeeded-Prefix.pch"; sourceTree = "<group>"; };
+		5E475AFC1675F7CB008C3699 /* UsingUnneededAlpha-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UsingUnneededAlpha-Prefix.pch"; sourceTree = "<group>"; };
 		5E475AFD1675F7CB008C3699 /* StripAlphaIfNeeded.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = StripAlphaIfNeeded.1; sourceTree = "<group>"; };
 		5E475B1016760150008C3699 /* ApplicationServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ApplicationServices.framework; path = System/Library/Frameworks/ApplicationServices.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
@@ -51,7 +51,7 @@
 		5E475AE71675F7CB008C3699 = {
 			isa = PBXGroup;
 			children = (
-				5E475AF81675F7CB008C3699 /* StripAlphaIfNeeded */,
+				5E475AF81675F7CB008C3699 /* UsingUnneededAlpha */,
 				5E475AF51675F7CB008C3699 /* Frameworks */,
 				5E475AF31675F7CB008C3699 /* Products */,
 			);
@@ -60,7 +60,7 @@
 		5E475AF31675F7CB008C3699 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				5E475AF21675F7CB008C3699 /* StripAlphaIfNeeded */,
+				5E475AF21675F7CB008C3699 /* UsingUnneededAlpha */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -74,20 +74,21 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		5E475AF81675F7CB008C3699 /* StripAlphaIfNeeded */ = {
+		5E475AF81675F7CB008C3699 /* UsingUnneededAlpha */ = {
 			isa = PBXGroup;
 			children = (
 				5E475AF91675F7CB008C3699 /* main.m */,
 				5E475AFD1675F7CB008C3699 /* StripAlphaIfNeeded.1 */,
 				5E475AFB1675F7CB008C3699 /* Supporting Files */,
 			);
+			name = UsingUnneededAlpha;
 			path = StripAlphaIfNeeded;
 			sourceTree = "<group>";
 		};
 		5E475AFB1675F7CB008C3699 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				5E475AFC1675F7CB008C3699 /* StripAlphaIfNeeded-Prefix.pch */,
+				5E475AFC1675F7CB008C3699 /* UsingUnneededAlpha-Prefix.pch */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -95,9 +96,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		5E475AF11675F7CB008C3699 /* StripAlphaIfNeeded */ = {
+		5E475AF11675F7CB008C3699 /* UsingUnneededAlpha */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 5E475B011675F7CB008C3699 /* Build configuration list for PBXNativeTarget "StripAlphaIfNeeded" */;
+			buildConfigurationList = 5E475B011675F7CB008C3699 /* Build configuration list for PBXNativeTarget "UsingUnneededAlpha" */;
 			buildPhases = (
 				5E475AEE1675F7CB008C3699 /* Sources */,
 				5E475AEF1675F7CB008C3699 /* Frameworks */,
@@ -107,9 +108,9 @@
 			);
 			dependencies = (
 			);
-			name = StripAlphaIfNeeded;
+			name = UsingUnneededAlpha;
 			productName = StripAlphaIfNeeded;
-			productReference = 5E475AF21675F7CB008C3699 /* StripAlphaIfNeeded */;
+			productReference = 5E475AF21675F7CB008C3699 /* UsingUnneededAlpha */;
 			productType = "com.apple.product-type.tool";
 		};
 /* End PBXNativeTarget section */
@@ -121,7 +122,7 @@
 				LastUpgradeCheck = 0450;
 				ORGANIZATIONNAME = "Foxtrot Studios";
 			};
-			buildConfigurationList = 5E475AEC1675F7CB008C3699 /* Build configuration list for PBXProject "StripAlphaIfNeeded" */;
+			buildConfigurationList = 5E475AEC1675F7CB008C3699 /* Build configuration list for PBXProject "UsingUnneededAlpha" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -133,7 +134,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				5E475AF11675F7CB008C3699 /* StripAlphaIfNeeded */,
+				5E475AF11675F7CB008C3699 /* UsingUnneededAlpha */,
 			);
 		};
 /* End PBXProject section */
@@ -207,8 +208,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "StripAlphaIfNeeded/StripAlphaIfNeeded-Prefix.pch";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				GCC_PREFIX_HEADER = "StripAlphaIfNeeded/UsingUnneededAlpha-Prefix.pch";
+				PRODUCT_NAME = UsingUnneededAlpha;
 			};
 			name = Debug;
 		};
@@ -216,15 +217,15 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "StripAlphaIfNeeded/StripAlphaIfNeeded-Prefix.pch";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				GCC_PREFIX_HEADER = "StripAlphaIfNeeded/UsingUnneededAlpha-Prefix.pch";
+				PRODUCT_NAME = UsingUnneededAlpha;
 			};
 			name = Release;
 		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		5E475AEC1675F7CB008C3699 /* Build configuration list for PBXProject "StripAlphaIfNeeded" */ = {
+		5E475AEC1675F7CB008C3699 /* Build configuration list for PBXProject "UsingUnneededAlpha" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				5E475AFF1675F7CB008C3699 /* Debug */,
@@ -233,13 +234,14 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		5E475B011675F7CB008C3699 /* Build configuration list for PBXNativeTarget "StripAlphaIfNeeded" */ = {
+		5E475B011675F7CB008C3699 /* Build configuration list for PBXNativeTarget "UsingUnneededAlpha" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				5E475B021675F7CB008C3699 /* Debug */,
 				5E475B031675F7CB008C3699 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
