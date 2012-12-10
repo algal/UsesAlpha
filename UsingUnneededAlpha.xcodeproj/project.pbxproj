@@ -33,6 +33,7 @@
 		5E475AFC1675F7CB008C3699 /* UsingUnneededAlpha-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UsingUnneededAlpha-Prefix.pch"; sourceTree = "<group>"; };
 		5E475AFD1675F7CB008C3699 /* StripAlphaIfNeeded.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = StripAlphaIfNeeded.1; sourceTree = "<group>"; };
 		5E475B1016760150008C3699 /* ApplicationServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ApplicationServices.framework; path = System/Library/Frameworks/ApplicationServices.framework; sourceTree = SDKROOT; };
+		5E475B171676282D008C3699 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.md; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -51,6 +52,7 @@
 		5E475AE71675F7CB008C3699 = {
 			isa = PBXGroup;
 			children = (
+				5E475B171676282D008C3699 /* README.md */,
 				5E475AF81675F7CB008C3699 /* UsingUnneededAlpha */,
 				5E475AF51675F7CB008C3699 /* Frameworks */,
 				5E475AF31675F7CB008C3699 /* Products */,
