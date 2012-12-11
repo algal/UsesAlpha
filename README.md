@@ -14,7 +14,7 @@ If you not only disable alpha, but remove the alpha channel data, then your imag
 How do you check if an image has an alpha channel which is enabled? Check its file info in Preview,
 or in the Xcode File Inspector. Or from the command line, do
 
-  sips -g hasAlpha moon.png
+    sips -g hasAlpha moon.png
 
 ## removing alpha channel from an image
 
@@ -22,7 +22,7 @@ To remove an unneeded alpha channel, you can save it without alpha from Preview.
 command line, you can use imagemagick's convert utility. For instance, to take the file moon.png 
 and remove the alpha channel data, using a black background, and turn off alpha, do as follows:
 
-  convert moon.png  -background black  -alpha remove -alpha off  alpha_remove.png
+    convert moon.png  -background black  -alpha remove -alpha off  alpha_remove.png
 
 If the alpha channel is truly not needed, because every pixel is opaque, then the background
 color is irrelevant.
@@ -36,7 +36,7 @@ all.
 One way to do this is to extract an image mask based only on the alpha values, and inspect that 
 image to see if it has any non-white pixels. From the command line, create the mask as follows:
 
-  convert moon.png -alpha extract alpha_extract.png
+    convert moon.png -alpha extract alpha_extract.png
   
 But now you need to inspect every pixel of the extracted image, so this is not automatic.
 
@@ -45,7 +45,7 @@ enabled alpha channel in an image?
 
 That's what this command line tool is for. Use it as follows:
 
-  ./UsesAlpha moon.png
+    ./UsesAlpha moon.png
 
 
 Ref for ImageMagick's convert: http://www.imagemagick.org/Usage/masking/#alpha_extract
