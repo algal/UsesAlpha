@@ -1,4 +1,4 @@
-This command line app detects when an image file has an alpha channel and does not use it.
+This command line app detects when an image file has an alpha channel it does not need.
 
 ## what's alpha channel?
 
