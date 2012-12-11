@@ -9,43 +9,37 @@
 #import <Foundation/Foundation.h>
 #import <ApplicationServices/ApplicationServices.h>
 
-// code adapted from the Image I/O Programming Guide
+/**
+ Creates an uncached CGImage, allowing floating point values
+ 
+ Code adpated from the ImageIO Programming Guide
+ */
 CGImageRef MyCreateCGImageFromFile (NSString* path)
 {
-  // Get the URL for the pathname passed to the function.
-  NSURL *url = [NSURL fileURLWithPath:path];
-  CGImageRef        myImage = NULL;
-  CGImageSourceRef  myImageSource;
-  CFDictionaryRef   myOptions = NULL;
-  CFStringRef       myKeys[2];
-  CFTypeRef         myValues[2];
+  // Create the options dictionary to allow resolution
+  CFDictionaryRef myOptions = CFDictionaryCreate(kCFAllocatorDefault,
+                                                 (const void **) (CFStringRef[]){ kCGImageSourceShouldAllowFloat },
+                                                 (const void **) (CFTypeRef[])  { (CFTypeRef) kCFBooleanTrue },
+                                                 1,
+                                                 &kCFTypeDictionaryKeyCallBacks,
+                                                 &kCFTypeDictionaryValueCallBacks);
   
-  // Set up options if you want them. The options here are for
-  // caching the image in a decoded form and for using floating-point
-  // values if the image format supports them.
-  myKeys[0]   = kCGImageSourceShouldCache;
-  myValues[0] = (CFTypeRef)kCFBooleanTrue;
-  myKeys[1]   = kCGImageSourceShouldAllowFloat;
-  myValues[1] = (CFTypeRef)kCFBooleanTrue;
-  // Create the dictionary
-  myOptions = CFDictionaryCreate(NULL, (const void **) myKeys,
-                                 (const void **) myValues, 2,
-                                 &kCFTypeDictionaryKeyCallBacks,
-                                 & kCFTypeDictionaryValueCallBacks);
   // Create an image source from the URL.
-  myImageSource = CGImageSourceCreateWithURL((__bridge CFURLRef)url, myOptions);
+  CGImageSourceRef myImageSource = CGImageSourceCreateWithURL((__bridge CFURLRef) [NSURL fileURLWithPath:path],
+                                                              myOptions);
   CFRelease(myOptions);
+  
   // Make sure the image source exists before continuing
   if (myImageSource == NULL){
     fprintf(stderr, "Image source is NULL.");
     return  NULL;
   }
+  
   // Create an image from the first item in the image source.
-  myImage = CGImageSourceCreateImageAtIndex(myImageSource,
-                                            0,
-                                            NULL);
+  CGImageRef myImage = CGImageSourceCreateImageAtIndex(myImageSource, 0, NULL);
   
   CFRelease(myImageSource);
+  
   // Make sure the image exists before continuing
   if (myImage == NULL){
     fprintf(stderr, "Image not created from image source.");
@@ -56,9 +50,9 @@ CGImageRef MyCreateCGImageFromFile (NSString* path)
 }
 
 /**
- Returns bitmap context with premultiplied ARGB components.
-
- That is, 32 bits per pixel, 8 pixels for Alpha, 8 bits for Alpha*Red, 
+ Returns bitmap context with premultiplied ARGB components, 8 bits each.
+ 
+ That is, 32 bits per pixel: 8 pixels for Alpha, 8 bits for Alpha*Red,
  8 bits for Alpha*Green, 8 bits for Alpha*Blue.
  
  code adapted from http://developer.apple.com/library/mac/#qa/qa1509/_index.html
@@ -70,7 +64,7 @@ CGContextRef CreateARGBBitmapContext (CGImageRef inImage)
   // kCGImageAlphaPremultipliedFirst adds the (initial) alpha component A
   const NSUInteger componentsPerPixel = 4;
   const NSUInteger bitsPerComponent = 8; // our choice of color & alpha depth
- 
+  
   CGContextRef    context = NULL;
   CGColorSpaceRef colorSpace;
   void *          bitmapData;
@@ -85,9 +79,9 @@ CGContextRef CreateARGBBitmapContext (CGImageRef inImage)
   // example is represented by 4 bytes; 8 bits each of red, green, blue, and
   // alpha.
   size_t bytesPerPixel = bitsPerComponent * componentsPerPixel / bitsPerByte;
-//  NSAssert(bytesPerPixel == 4, @"unexpected measure of bytes per pixel");
+  //  NSAssert(bytesPerPixel == 4, @"unexpected measure of bytes per pixel");
   
-  bitmapBytesPerRow   = (pixelsWide * bytesPerPixel); 
+  bitmapBytesPerRow   = (pixelsWide * bytesPerPixel);
   bitmapByteCount     = (bitmapBytesPerRow * pixelsHigh);
   
   // Use the generic RGB color space.
@@ -115,7 +109,7 @@ CGContextRef CreateARGBBitmapContext (CGImageRef inImage)
   context = CGBitmapContextCreate (bitmapData,
                                    pixelsWide,
                                    pixelsHigh,
-                                   bitsPerComponent,     
+                                   bitsPerComponent,
                                    bitmapBytesPerRow,
                                    colorSpace,
                                    kCGImageAlphaPremultipliedFirst);
@@ -131,77 +125,19 @@ CGContextRef CreateARGBBitmapContext (CGImageRef inImage)
   return context;
 }
 
-CGContextRef CreateAlphaOnlyBitmapContext (CGImageRef inImage)
-{
-  const NSUInteger bitsPerByte = 8; // definitional
-  const NSUInteger componentsPerPixel = 1;   // kCGImageAlphaOnly
-  const NSUInteger bitsPerComponent = 8; // our choice of color & alpha depth
-  
-  CGContextRef    context = NULL;
-  void *          bitmapData;
-  size_t          bitmapByteCount;
-  size_t          bitmapBytesPerRow;
-  
-  // Get image width, height. We'll use the entire image.
-  size_t pixelsWide = CGImageGetWidth(inImage);
-  size_t pixelsHigh = CGImageGetHeight(inImage);
-  
-  // Declare the number of bytes per row. Each pixel in the bitmap in this
-  // example is represented by 4 bytes; 8 bits each of red, green, blue, and
-  // alpha.
-  size_t bytesPerPixel = bitsPerComponent * componentsPerPixel / bitsPerByte;
-  
-  bitmapBytesPerRow   = (pixelsWide * bytesPerPixel);
-  bitmapByteCount     = (bitmapBytesPerRow * pixelsHigh);
-  
-  // Allocate memory for image data. This is the destination in memory
-  // where any drawing to the bitmap context will be rendered.
-  bitmapData = malloc( bitmapByteCount );
-  if (bitmapData == NULL)
-  {
-    fprintf (stderr, "Memory not allocated!");
-    return NULL;
-  }
-  
-  // Create the alpha-only bitmap context.
-  context = CGBitmapContextCreate (bitmapData,
-                                   pixelsWide,
-                                   pixelsHigh,
-                                   bitsPerComponent,
-                                   bitmapBytesPerRow,
-                                   NULL,
-                                   kCGImageAlphaOnly);
-  if (context == NULL)
-  {
-    free (bitmapData);
-    fprintf (stderr, "Context not created!");
-  }
-  
-  // populate the bitmap context from the image
-  CGContextDrawImage(context, CGRectMake(0, 0, pixelsWide, pixelsHigh),inImage);
-  return context;
-}
-
 /**
-  Returns YES if image has and uses an alpha channel, or if there was an error.
- */
-// code adapted from http://developer.apple.com/library/mac/#qa/qa1509/_index.html
-BOOL HasAndUsesAlphaChannel(CGImageRef inImage)
-{
-  CGImageAlphaInfo alphaInfo = CGImageGetAlphaInfo(inImage);
-  if (alphaInfo == kCGImageAlphaNone ||
-      alphaInfo == kCGImageAlphaNoneSkipFirst ||
-      alphaInfo == kCGImageAlphaNoneSkipLast) {
-    // does not even have an alpha channel
-    return NO;
-  }
-  
-  BOOL usesAlphaResult = NO; // presumed no
+ Returns YES if image has and uses an alpha channel, or if there was an error.
 
+ code adapted from http://developer.apple.com/library/mac/#qa/qa1509/_index.html
+ */
+BOOL UsesAlphaChannel(CGImageRef inImage, BOOL verboseLogging)
+{
+  BOOL usesAlphaResult = NO; // presumed no
+  
   // Get image width, height. We'll use the entire image.
   size_t w = CGImageGetWidth(inImage);
   size_t h = CGImageGetHeight(inImage);
-  CGRect rect = {{0,0},{w,h}};
+  CGRect rect = CGRectMake(0, 0, w, h);
   
   // Create the bitmap context
   CGContextRef cgctx = CreateARGBBitmapContext(inImage);
@@ -218,40 +154,45 @@ BOOL HasAndUsesAlphaChannel(CGImageRef inImage)
   // raw image data in the specified color space.
   CGContextDrawImage(cgctx, rect, inImage);
   
-  // Now we can get a pointer to the image data associated with the bitmap
-  // context.
+  // Now we can get a pointer to the image data associated with the bitmap context.
   void *data = CGBitmapContextGetData (cgctx);
   if (data != NULL)
   {
     typedef struct pixel
     {
-      unsigned char alpha; // 1 byte for alpha
-      unsigned char red;   // 1 byte for red,
-      unsigned char green; // etc..
-      unsigned char blue;
+      UInt8 alpha; // 1 byte for alpha
+      UInt8 red;   // 1 byte for red,
+      UInt8 green; // etc..
+      UInt8 blue;
     } pixel_t;
-
+    
     pixel_t * pixels = data;
-//    fprintf(stdout, "inspecting {%zu,%zu} rect of pixels with 32 bits per pixel\n", w,h);
-
-    for (unsigned int y= 0; y < h; ++y) {
-//      fprintf(stdout, "printing row y=%u\n",y);
-      for (unsigned int x =0; x < w; ++x) {
-//        fprintf(stdout, "  printing col x=%u:",x);
+    if (verboseLogging) {
+      fprintf(stdout, "inspecting {%zu,%zu} rect of pixels with 32 bits per pixel\n", w,h);
+    }
+    
+    for (size_t y= 0; y < h; ++y) {
+      if (verboseLogging) {
+        fprintf(stdout, "printing row y=%zu\n",y);
+      }
+      for (size_t x =0; x < w; ++x) {
+        if (verboseLogging) {
+          fprintf(stdout, "  printing col x=%zu:",x);
+        }
         pixel_t p = pixels[y * w + x];
-//        fprintf(stdout, "  pixel = {%u,%u,%u,%u}",p.alpha,p.red,p.green,p.blue);
-//        fprintf(stdout,"\n");
+        if (verboseLogging) {
+          fprintf(stdout, "  pixel = {%u,%u,%u,%u}",p.alpha,p.red,p.green,p.blue);
+          fprintf(stdout,"\n");
+        }
         if (p.alpha != 255) {
-//          fprintf(stdout,"at {%u,%u}, found non-translucent ARGB pixel = {%u,%u,%u,%u}\n",x,y,p.alpha,p.red,p.green,p.blue);
+          if (verboseLogging) {
+            fprintf(stdout,"at {%zu,%zu}, found non-translucent ARGB pixel = {%u,%u,%u,%u}\n",x,y,p.alpha,p.red,p.green,p.blue);
+          }
           usesAlphaResult = YES;
-//          goto finish;
         }
       }
     }
-
   }
-  
-finish:;
   
   // When finished, release the context
   CGContextRelease(cgctx);
@@ -283,45 +224,57 @@ int main(int argc, const char * argv[])
   
   @autoreleasepool {
     
-    if (argc != 2) {
-      NSLog(@"usage: UsingUnneededAlpha /full/path/to/file.png");
+    BOOL verbose = NO;
+    
+    NSString * PNGFilepath;
+    if (argc != 2 && argc != 3) {
+      printf("usage: UsesAlpha /full/path/to/file.png\n");
       exit(1);
     }
+    else if (argc==2) {
+      verbose = NO;
+      PNGFilepath = [NSString stringWithCString:argv[1] encoding:NSUTF8StringEncoding];
+    }
+    else if (argc==3 &&
+             [@"--verbose" isEqualToString:[NSString stringWithCString:argv[1] encoding:NSUTF8StringEncoding]]) {
+      verbose = YES;
+      PNGFilepath = [NSString stringWithCString:argv[2] encoding:NSUTF8StringEncoding];
+    }
     
-    NSString * PNGFilepath = [NSString stringWithCString:argv[1] encoding:NSUTF8StringEncoding];
     if (![[NSFileManager defaultManager] fileExistsAtPath:PNGFilepath]) {
-      NSLog(@"No file found at path %@",PNGFilepath);
+      fprintf(stderr,"No file found at path %s\n",[PNGFilepath cStringUsingEncoding:NSUTF8StringEncoding]);
       exit(1);
     }
     else {
-      NSLog(@"%@",PNGFilepath);
+      printf("%s\n",[PNGFilepath cStringUsingEncoding:NSUTF8StringEncoding]);
     }
     
     CGImageRef image = MyCreateCGImageFromFile(PNGFilepath);
     if (!image) {
-      NSLog(@"Unable to create CGImageRef from file %@",PNGFilepath);
+      fprintf(stderr,"Unable to create image from file %s\n",[PNGFilepath cStringUsingEncoding:NSUTF8StringEncoding]  );
       exit(1);
     }
     
     BOOL const hasAlphaLayer = HasAlpha(image);
-
+    
     if (!hasAlphaLayer) {
-      NSLog(@"  hasAlpha = NO");
+      printf("  hasAlpha  = NO\n");
       exit(0);
     } else {
-      NSLog(@"  hasAlpha = YES");
+      printf("  hasAlpha  = YES\n");
     }
-
-    BOOL const usesAlphaLayer = HasAndUsesAlphaChannel(image);
+    
+    BOOL const usesAlphaLayer = UsesAlphaChannel(image,verbose);
     if (usesAlphaLayer) {
-      NSLog(@"  usesAlpha = YES");
+      printf("  usesAlpha = YES\n");
       exit(0);
     }
     else
     {
-      NSLog(@"  usesAlpha = NO");
+      printf("  usesAlpha = NO\n");
       exit(0);
     }
+  // TODO? replace these preceding calls to exit with a goto to the end of the autorelease pool
   }
   return 0;
 }
